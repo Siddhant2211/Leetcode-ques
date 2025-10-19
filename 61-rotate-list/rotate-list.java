@@ -20,39 +20,27 @@ class Solution {
         return cnt;
     }
     
-    public ListNode rotateRight(ListNode head, int k) {
-        if(head == null) return null;
+    public ListNode rotateRight(ListNode head, int k) { 
+        if(head == null || k == 0) return head;
         int len = size(head);
         k = k % len;
-        int [] arr = new int [len];
+        k = len-k-1;
         ListNode temp = head;
-        int i = 0;
-        while(temp != null){
-            arr [i++] = temp.val;
+        while(temp.next != null){
             temp = temp.next;
         }
-        reverse(arr, 0, len - k - 1);
-        reverse(arr, len - k, len - 1);
-        reverse(arr, 0, len - 1);
-        ListNode x = new ListNode(-1);
-        ListNode dummy = x;
-        for(int j = 0; j < len; j++){
-            ListNode tri = new ListNode(arr [j]);
-            x.next = tri;
-            x = tri;
+        temp.next = head;
+        int cnt = 0;
+        ListNode t = head;
+        while(cnt != k){
+            t = t.next;
+            cnt++;
         }
-        return dummy.next;
+        ListNode y = t.next;
+        t.next = null;
+        return y;
     }
 
 
 
-    public void reverse(int [] arr, int l, int r){
-        while(l < r){
-            int temp = arr [l];
-            arr [l] = arr [r];
-            arr [r] = temp;
-            l++;
-            r--;
-        }
-    }
 }
